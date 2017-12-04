@@ -1,10 +1,10 @@
-package de.aboutflash.archerytime.server.main;
+package de.aboutflash.archerytime.host.main;
 
-import de.aboutflash.archerytime.server.model.ControlViewModel;
-import de.aboutflash.archerytime.server.model.FITACycleABCD;
-import de.aboutflash.archerytime.server.model.FITACycleModel;
-import de.aboutflash.archerytime.server.net.Announcer;
-import de.aboutflash.archerytime.server.ui.ControlScreen;
+import de.aboutflash.archerytime.host.model.ControlViewModel;
+import de.aboutflash.archerytime.host.model.FITACycleModel;
+import de.aboutflash.archerytime.host.model.FITACycleModelSimulation;
+import de.aboutflash.archerytime.host.net.Announcer;
+import de.aboutflash.archerytime.host.ui.ControlScreen;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -22,7 +22,7 @@ import java.util.TimerTask;
  *
  * @author falk@aboutflash.de on 19.11.2017.
  */
-public class ArcheryTimeControlServer extends Application {
+public class ArcheryTimeControlHost extends Application {
 
   private final static Rectangle2D DEFAULT_SIZE = new Rectangle2D(0.0, 0.0, 1920.0 * 0.5, 1080.0 * 0.5);
 
@@ -39,7 +39,7 @@ public class ArcheryTimeControlServer extends Application {
 
   @Override
   public void init() throws Exception {
-    model = new FITACycleABCD();
+    model = new FITACycleModelSimulation();
     announceServer();
     observeModel();
   }
@@ -107,7 +107,7 @@ public class ArcheryTimeControlServer extends Application {
 
 
   private void layout() {
-    setUserAgentStylesheet(getClass().getResource("server.css").toExternalForm());
+    setUserAgentStylesheet(getClass().getResource("host.css").toExternalForm());
 
     primaryStage.setWidth(DEFAULT_SIZE.getWidth());
     primaryStage.setHeight(DEFAULT_SIZE.getHeight());

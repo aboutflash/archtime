@@ -1,6 +1,6 @@
-package de.aboutflash.archerytime.server.ui;
+package de.aboutflash.archerytime.host.ui;
 
-import de.aboutflash.archerytime.server.model.ControlViewModel;
+import de.aboutflash.archerytime.host.model.ControlViewModel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 

@@ -1,6 +1,6 @@
-package de.aboutflash.archerytime.server.net;
+package de.aboutflash.archerytime.host.net;
 
-import de.aboutflash.archerytime.server.model.FITACycleModel;
+import de.aboutflash.archerytime.host.model.FITACycleModel;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;

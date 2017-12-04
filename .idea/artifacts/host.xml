@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" build-on-make="true" name="server">
+  <artifact type="javafx" build-on-make="true" name="host">
     <output-path>$PROJECT_DIR$/out/artifacts/archtime</output-path>
     <properties id="javafx-properties">
       <options>

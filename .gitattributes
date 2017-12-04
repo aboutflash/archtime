@@ -1,0 +1,29 @@
+**      text=auto eol=lf
+*.bat		text eol=crlf
+*.cmd		text eol=crlf
+*.svg   text eol=lf
+
+
+
+# Just to probably speed things up as per documentation GIT seems to inspect the contents of
+# every file to determine which diff patch to use and even make a decision whether to perform text
+# EOL conversion. This might not actually be required because GIT might be very smart at it
+# but it doesn't hurt anyway.
+*.jar   binary
+*.class binary
+*.png   binary
+*.gif   binary
+*.jpg   binary
+*.jpeg  binary
+*.dll   binary
+*.psd   binary
+*.ttf   binary
+*.otf   binary
+*.woff  binary
+*.woff2 binary
+*.exe   binary
+*.zip   binary
+*.bin   binary
+*.xlsx  binary
+
+

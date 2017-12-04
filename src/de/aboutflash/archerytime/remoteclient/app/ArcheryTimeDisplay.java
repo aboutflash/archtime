@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 
 /**
  * The dumb display application.
- * It simply shows, what the control server says.
+ * It simply shows, what the control host says.
  *
  * @author falk@aboutflash.de on 22.11.2017.
  */

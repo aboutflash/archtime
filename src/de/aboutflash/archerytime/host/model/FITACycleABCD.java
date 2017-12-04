@@ -1,8 +1,8 @@
-package de.aboutflash.archerytime.server.model;
+package de.aboutflash.archerytime.host.model;
 
 import de.aboutflash.archerytime.model.ScreenState;
 import de.aboutflash.archerytime.model.SettingsModel;
-import de.aboutflash.archerytime.server.model.Cycle.Segment;
+import de.aboutflash.archerytime.host.model.Cycle.Segment;
 import javafx.collections.ObservableList;
 
 import javax.annotation.Nullable;

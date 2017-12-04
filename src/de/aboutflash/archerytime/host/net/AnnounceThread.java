@@ -1,8 +1,8 @@
-package de.aboutflash.archerytime.server.net;
+package de.aboutflash.archerytime.host.net;
 
 import de.aboutflash.archerytime.json.JSONObjectSerializer;
 import de.aboutflash.archerytime.net.TransmissionThread;
-import de.aboutflash.archerytime.server.model.FITACycleModel;
+import de.aboutflash.archerytime.host.model.FITACycleModel;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -51,7 +51,7 @@ public class AnnounceThread extends TransmissionThread {
           byte[] sendData = getSerializedData().getBytes();
           DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, getSubnetAddress(), RESPONSE_PORT);
 
-          //Send server announcement
+          //Send host announcement
           socket.send(sendPacket);
           announcementCount++;
           log.info(toString());
@@ -72,7 +72,7 @@ public class AnnounceThread extends TransmissionThread {
 
   @Override
   public String toString() {
-    return String.format("%nSender: announced server %12d times", announcementCount);
+    return String.format("%nSender: announced host %12d times", announcementCount);
   }
 
   private String getSerializedData() {

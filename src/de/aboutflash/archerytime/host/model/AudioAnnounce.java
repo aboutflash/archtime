@@ -1,4 +1,4 @@
-package de.aboutflash.archerytime.server.model;
+package de.aboutflash.archerytime.host.model;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

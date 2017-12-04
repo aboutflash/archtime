@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
  * @author falk@aboutflash.de on 19.11.2017.
  */
 public class StartupViewModel {
-  private StringProperty message = new SimpleStringProperty("waiting for server");
+  private StringProperty message = new SimpleStringProperty("waiting for host");
 
   public String getMessage() {
     return message.get();

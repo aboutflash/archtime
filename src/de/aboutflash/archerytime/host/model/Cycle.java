@@ -1,4 +1,4 @@
-package de.aboutflash.archerytime.server.model;
+package de.aboutflash.archerytime.host.model;
 
 import de.aboutflash.archerytime.model.ScreenState;
 
