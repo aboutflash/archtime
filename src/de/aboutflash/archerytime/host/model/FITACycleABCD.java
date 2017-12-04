@@ -1,9 +1,8 @@
 package de.aboutflash.archerytime.host.model;
 
+import de.aboutflash.archerytime.host.model.Cycle.Segment;
 import de.aboutflash.archerytime.model.ScreenState;
 import de.aboutflash.archerytime.model.SettingsModel;
-import de.aboutflash.archerytime.host.model.Cycle.Segment;
-import javafx.collections.ObservableList;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
@@ -14,7 +13,6 @@ import java.util.TimerTask;
 import static de.aboutflash.archerytime.model.ScreenState.Screen.*;
 import static de.aboutflash.archerytime.model.ScreenState.Sequence.AB;
 import static de.aboutflash.archerytime.model.ScreenState.Sequence.CD;
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Class
@@ -56,6 +54,9 @@ public class FITACycleABCD implements FITACycleModel {
 
   private void runSegment(Segment segment) {
     stopTask();
+
+    if (segment == null)
+      return;
 
     remainingTimeMillis = segment.getDurationMillis();
     screen = segment.getScreen();
@@ -120,7 +121,7 @@ public class FITACycleABCD implements FITACycleModel {
   }
 
   @Override
-  public int getRemainingTimeSeconds() {
+  public synchronized int getRemainingTimeSeconds() {
     return (int) Math.floor(getRemainingTimeMillis() * MILLIS_TO_SECONDS);
   }
 
@@ -134,31 +135,5 @@ public class FITACycleABCD implements FITACycleModel {
     final ScreenState screenState = new ScreenState(screen, sequence, getRemainingTimeSeconds());
     return screenState;
   }
-
-
-  private ScreenState.Screen getRandomScreen() {
-    final ObservableList<ScreenState.Screen> screens = observableArrayList(
-        ScreenState.Screen.STOP,
-        STEADY,
-        SHOOT,
-        ScreenState.Screen.SHOOT_UP30
-    );
-
-    final int idx = (int) Math.floor(Math.random() * (double) (screens.size()));
-    return screens.get(idx);
-  }
-
-  private ScreenState.Sequence getRandomSequence() {
-    final ObservableList<ScreenState.Sequence> sequences = observableArrayList(
-        ScreenState.Sequence.A,
-        ScreenState.Sequence.B,
-        AB,
-        ScreenState.Sequence.CD
-    );
-
-    final int idx = (int) Math.floor(Math.random() * (double) (sequences.size()));
-    return sequences.get(idx);
-  }
-
 
 }

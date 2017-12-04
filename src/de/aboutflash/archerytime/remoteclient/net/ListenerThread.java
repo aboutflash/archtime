@@ -47,15 +47,15 @@ public class ListenerThread extends TransmissionThread {
 
     try (DatagramSocket socket = new DatagramSocket(packet.getPort(), packet.getAddress())) {
       socket.setBroadcast(true);
+      socket.setReuseAddress(true);
 
       do {
         try {
-
           socket.receive(packet);
-          processData(packet);
-
         } catch (IOException e) {
           log.severe(e.getMessage());
+        } finally {
+          processData(packet);
         }
 
       } while (true);
@@ -68,7 +68,14 @@ public class ListenerThread extends TransmissionThread {
 
   private void processData(DatagramPacket packet) {
     final String s = new String(packet.getData()).trim();
-    final ScreenState screenState = serializer.deserializeScreenState(s);
+    ScreenState screenState = new ScreenState(ScreenState.Screen.STOP);
+
+    try {
+      screenState = serializer.deserializeScreenState(s);
+    } catch (Exception e) {
+      log.severe("Could not decode host message: " + s);
+    }
+
     if (!screenState.getScreen().equals(ScreenState.Screen.INVALID)) {
       log.info("RECEIVED: " + screenState);
       screenStateConsumer.accept(screenState);

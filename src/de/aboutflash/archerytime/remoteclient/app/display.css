@@ -63,8 +63,7 @@ Windows File Properties > Details > Title
     -fx-background-color: #BA9936; }
 
 .sequence-display {
-  -fx-min-width: 25em;
-  -fx-alignment: left; }
+  -fx-min-width: 25em; }
   .sequence-display__ab SVGPath, .sequence-display__cd SVGPath {
     -fx-fill: rgba(255, 255, 255, 0.2); }
   .sequence-display__ab:active SVGPath, .sequence-display__cd:active SVGPath {

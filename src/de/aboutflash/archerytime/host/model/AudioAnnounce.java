@@ -1,6 +1,7 @@
 package de.aboutflash.archerytime.host.model;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 import java.util.logging.Logger;
@@ -15,13 +16,24 @@ public class AudioAnnounce {
 
   private String mediaLocation;
   private MediaPlayer mediaPlayer;
+  private boolean canPlayMedia = false;
 
   public AudioAnnounce(String mediaLocation) {
     this.mediaLocation = mediaLocation;
-    mediaPlayer = new MediaPlayer(new Media(mediaLocation));
+    try {
+      mediaPlayer = new MediaPlayer(new Media(mediaLocation));
+      canPlayMedia = true;
+    } catch (MediaException ex) {
+      // MediaExceptions may be thrown on non-Windows systems
+      log.severe("Cannot create Media Player");
+    }
   }
 
   public void nTimes(int repeat) {
+    if (!canPlayMedia) {
+      log.severe("Cannot play media");
+      return;
+    }
     log.info(() -> String.format("Playing sound %s %d times", mediaLocation, repeat));
     mediaPlayer.stop();
     if (repeat > 0) {

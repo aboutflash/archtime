@@ -44,7 +44,7 @@ public class AnnounceThread extends TransmissionThread {
 
     try (DatagramSocket socket = new DatagramSocket()) {
       socket.setBroadcast(true);
-
+      socket.setReuseAddress(true);
 
       do {
         try {

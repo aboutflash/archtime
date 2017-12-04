@@ -3,16 +3,16 @@
     <output-path>$PROJECT_DIR$/out/artifacts/archtime</output-path>
     <properties id="javafx-properties">
       <options>
-        <option name="appClass" value="de.aboutflash.archerytime.server.main.ArcheryTimeControlServer" />
+        <option name="appClass" value="de.aboutflash.archerytime.host.main.ArcheryTimeControlHost" />
         <option name="description" value="" />
         <option name="htmlPlaceholderId" value="" />
-        <option name="title" value="server" />
+        <option name="title" value="host" />
         <option name="vendor" value="" />
         <option name="version" value="" />
       </options>
     </properties>
     <root id="root">
-      <element id="archive" name="server.jar">
+      <element id="archive" name="host.jar">
         <element id="module-output" name="archtime" />
         <element id="library" level="project" name="com.fasterxml.jackson.core:jackson-annotations:Release" />
         <element id="library" level="project" name="com.fasterxml.jackson.core:jackson-core:Release" />
