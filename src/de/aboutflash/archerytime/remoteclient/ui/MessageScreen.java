@@ -11,12 +11,12 @@ import javafx.scene.layout.VBox;
  *
  * @author falk@aboutflash.de on 19.11.2017.
  */
-public class StartupScreen extends StackPane {
+public class MessageScreen extends StackPane {
   @SuppressWarnings("WeakerAccess")
-  public static final String DEFAULT_STYLE_CLASS = "startup-screen";
+  public static final String DEFAULT_STYLE_CLASS = "message-screen";
   private final StartupViewModel model;
 
-  public StartupScreen(StartupViewModel viewModel) {
+  public MessageScreen(StartupViewModel viewModel) {
     model = viewModel;
 
     getStyleClass().add(DEFAULT_STYLE_CLASS);
@@ -24,10 +24,10 @@ public class StartupScreen extends StackPane {
   }
 
   private void drawUi() {
-    final Label connecting = new Label();
-    connecting.textProperty().bind(model.messageProperty());
+    final Label message = new Label();
+    message.textProperty().bind(model.messageProperty());
 
-    final VBox vBox = new VBox(connecting);
+    final VBox vBox = new VBox(message);
     vBox.setAlignment(Pos.CENTER);
     StackPane.setAlignment(vBox, Pos.CENTER);
 

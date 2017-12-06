@@ -1,9 +1,10 @@
 @import "../scss/colors";
 @import "../scss/fonts";
 
-.startup-screen {
+.message-screen {
   .text {
     @include fontStartup($color-font);
+    -fx-alignment: center;
   }
   -fx-background-color: $color-bg-startup;
 }

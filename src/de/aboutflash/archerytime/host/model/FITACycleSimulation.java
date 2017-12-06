@@ -15,7 +15,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * @author falk@aboutflash.de on 27.11.2017.
  */
-public class FITACycleModelSimulation implements FITACycleModel {
+public class FITACycleSimulation implements FITACycleModel {
 
   private static final double MILLIS_TO_SECONDS = 0.001;
 
@@ -27,7 +27,7 @@ public class FITACycleModelSimulation implements FITACycleModel {
   private final Timer simulationTimer;
   private final AudioAnnounce announce = new AudioAnnounce(SettingsModel.getInstance().getSoundFileLocation().toString());
 
-  public FITACycleModelSimulation() {
+  public FITACycleSimulation() {
     simulationTimer = new Timer();
 
     simulationTask = new TimerTask() {
@@ -54,8 +54,23 @@ public class FITACycleModelSimulation implements FITACycleModel {
   private volatile double remainingTimeMillis = SIM_ROUND_TIME;
 
   @Override
-  public void startNextStep() {
+  public String getName() {
+    return "SIMULATION";
+  }
 
+  @Override
+  public int getLength() {
+    return 1;
+  }
+
+  @Override
+  public int getCurrentSegmentIdx() {
+    return 0;
+  }
+
+  @Override
+  public void startNextStep() {
+    // nop
   }
 
   @Override

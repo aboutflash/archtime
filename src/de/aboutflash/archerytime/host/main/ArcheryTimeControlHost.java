@@ -1,7 +1,7 @@
 package de.aboutflash.archerytime.host.main;
 
 import de.aboutflash.archerytime.host.model.ControlViewModel;
-import de.aboutflash.archerytime.host.model.FITACycleABCD;
+import de.aboutflash.archerytime.host.model.FITACycleBlank;
 import de.aboutflash.archerytime.host.model.FITACycleModel;
 import de.aboutflash.archerytime.host.net.Announcer;
 import de.aboutflash.archerytime.host.ui.ControlScreen;
@@ -39,7 +39,7 @@ public class ArcheryTimeControlHost extends Application {
 
   @Override
   public void init() throws Exception {
-    model = new FITACycleABCD();
+    model = new FITACycleBlank();
     announceServer();
     observeModel();
   }

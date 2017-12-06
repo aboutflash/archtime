@@ -5,7 +5,7 @@ import de.aboutflash.archerytime.remoteclient.model.CountdownViewModel;
 import de.aboutflash.archerytime.remoteclient.model.StartupViewModel;
 import de.aboutflash.archerytime.remoteclient.net.Listener;
 import de.aboutflash.archerytime.remoteclient.ui.CountDownScreen;
-import de.aboutflash.archerytime.remoteclient.ui.StartupScreen;
+import de.aboutflash.archerytime.remoteclient.ui.MessageScreen;
 import de.aboutflash.archerytime.remoteclient.ui.StopScreen;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -94,6 +94,7 @@ public class ArcheryTimeDisplay extends Application {
         break;
       case MESSAGE:
         showMessage(screenState.getMessage());
+        break;
       default:
         showStartup();
     }
@@ -175,14 +176,14 @@ public class ArcheryTimeDisplay extends Application {
 
   private void showMessage(String message) {
     if (isNewScreenInstanceRequired()) {
-      activeScreen = new StartupScreen(startupViewModel);
+      activeScreen = new MessageScreen(startupViewModel);
       rootPane.getChildren().setAll(activeScreen);
     }
     startupViewModel.setMessage(message);
   }
 
   private void showStartup() {
-    showMessage("wait for connection");
+    showMessage("*** no host ***");
   }
 
   private void showStop() {

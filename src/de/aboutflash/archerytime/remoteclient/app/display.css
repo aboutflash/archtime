@@ -10,13 +10,14 @@ Windows File Properties > Details > Title
   font-weight: bold;
   src: local("roboto-black.ttf") url("roboto-black.ttf") format("truetype"); }
 
-.startup-screen {
+.message-screen {
   -fx-background-color: #2E5587; }
-  .startup-screen .text {
+  .message-screen .text {
     -fx-font-family: "Roboto Black", sans-serif;
     -fx-text-fill: #FFFFFF;
     -fx-fill: #FFFFFF;
-    -fx-font-size: 2em; }
+    -fx-font-size: 2em;
+    -fx-alignment: center; }
 
 .stop-screen {
   -fx-background-color: #87181B; }

@@ -9,6 +9,12 @@ import de.aboutflash.archerytime.model.ScreenState;
  */
 public interface FITACycleModel {
 
+  String getName();
+
+  int getLength();
+
+  int getCurrentSegmentIdx();
+
   void startNextStep();
 
   double getRemainingTimeMillis();
