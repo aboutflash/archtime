@@ -4,3 +4,6 @@
     -fx-fill: #FFFFFF;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.2em; }
+  .control-screen Button .text {
+    -fx-fill: black;
+  }

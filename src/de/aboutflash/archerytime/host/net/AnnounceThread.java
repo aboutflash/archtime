@@ -9,6 +9,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 /**
@@ -23,11 +24,11 @@ public class AnnounceThread extends TransmissionThread {
   private final Logger log;
 
   private final JSONObjectSerializer serializer;
-  private final FITACycleModel model;
+  private volatile Supplier<FITACycleModel> model;
 
   private long announcementCount;
 
-  public AnnounceThread(final FITACycleModel model) throws UnknownHostException, SocketException {
+  public AnnounceThread(final Supplier<FITACycleModel> model) throws UnknownHostException, SocketException {
     this.model = model;
     serializer = new JSONObjectSerializer();
     log = Logger.getLogger(getClass().getName());
@@ -37,6 +38,10 @@ public class AnnounceThread extends TransmissionThread {
   @Override
   public void run() {
     announceServer();
+  }
+
+  public void setModel(final Supplier<FITACycleModel> model) {
+    this.model = model;
   }
 
   @SuppressWarnings({"BusyWait", "NestedTryStatement", "InfiniteLoopStatement", "Duplicates"})
@@ -76,6 +81,6 @@ public class AnnounceThread extends TransmissionThread {
   }
 
   private String getSerializedData() {
-    return serializer.serializeScreenState(model.getScreenState());
+    return serializer.serializeScreenState(model.get().getScreenState());
   }
 }

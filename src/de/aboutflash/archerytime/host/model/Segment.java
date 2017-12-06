@@ -2,6 +2,7 @@ package de.aboutflash.archerytime.host.model;
 
 import de.aboutflash.archerytime.model.ScreenState;
 import de.aboutflash.archerytime.model.SettingsModel;
+import javafx.util.Builder;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -74,7 +75,7 @@ public class Segment {
    * Builder class for easy segment generation.
    */
   @SuppressWarnings("ReturnOfThis")
-  public static class SegmentBuilder implements javafx.util.Builder<Segment> {
+  public static class SegmentBuilder implements Builder<Segment> {
     private static final double NONE = 0.0;
     private static final double INDEFINITE = 0.0;
 

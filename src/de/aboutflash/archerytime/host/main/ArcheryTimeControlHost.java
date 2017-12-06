@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.function.Supplier;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Class
@@ -33,6 +36,12 @@ public class ArcheryTimeControlHost extends Application {
 
   private Announcer announcer;
   private FITACycleModel model;
+  private Supplier<FITACycleModel> modelSupplier = new Supplier<FITACycleModel>() {
+    @Override
+    public FITACycleModel get() {
+      return model;
+    }
+  };
 
   public static void main(final String... args) {
     launch(args);
@@ -40,14 +49,27 @@ public class ArcheryTimeControlHost extends Application {
 
   @Override
   public void init() throws Exception {
-    model = new FITACycleBlank();
+    announceModel(new FITACycleBlank());
     model.startNextStep();
-    announceServer();
     observeModel();
   }
 
   private void announceServer() {
-    announcer = new Announcer(model);
+    announcer = new Announcer();
+  }
+
+  private void announceModel(final FITACycleModel model) {
+    checkNotNull(model);
+
+    if (this.model != null)
+      this.model.dispose();
+
+    if (announcer == null) {
+      this.model = model;
+      announceServer();
+    }
+    announcer.setModel(() -> model);
+    this.model = model;
   }
 
   @Override
@@ -109,13 +131,15 @@ public class ArcheryTimeControlHost extends Application {
 
 
   private void layout() {
-//    setUserAgentStylesheet(getClass().getResource("host.css").toExternalForm());
-
     primaryStage.setWidth(DEFAULT_SIZE.getWidth());
     primaryStage.setHeight(DEFAULT_SIZE.getHeight());
 
     rootPane = new StackPane();
-    primaryStage.setScene(new Scene(rootPane));
+    Scene scene = new Scene(rootPane);
+
+    scene.getStylesheets().add(getClass().getResource("host.css").toExternalForm());
+    primaryStage.setScene(scene);
+
 
     primaryStage.show();
   }
@@ -126,17 +150,13 @@ public class ArcheryTimeControlHost extends Application {
     rootPane.getChildren().setAll(controlScreen);
 
     controlScreen.setOnStart(event -> {
-      announcer.stop();
-      model = new FITACycleEndlessDemo();
-      model.startNextStep();
-      announceServer();
+      announceModel(new FITACycleEndlessDemo());
+      modelSupplier.get().startNextStep();
     });
 
     controlScreen.setOnStop(event -> {
-      announcer.stop();
-      model = new FITACycleBlank();
-      model.startNextStep();
-      announceServer();
+      announceModel(new FITACycleBlank());
+      modelSupplier.get().startNextStep();
     });
   }
 

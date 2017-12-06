@@ -6,6 +6,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
@@ -17,14 +18,12 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 public class Announcer {
 
   private final ExecutorService executorService;
-  private final FITACycleModel model;
+  private Supplier<FITACycleModel> model;
   private Future<?> submission;
+  private AnnounceThread thread;
 
-  public Announcer(final FITACycleModel model) {
-    this.model = model;
-
+  public Announcer() {
     executorService = newSingleThreadExecutor();
-    runForever();
   }
 
   public void stop() {
@@ -32,9 +31,24 @@ public class Announcer {
     executorService.shutdownNow();
   }
 
+  public synchronized void setModel(Supplier<FITACycleModel> model) {
+    this.model = model;
+
+    if (thread == null) {
+      runForever();
+    } else {
+      thread.setModel(this.model);
+    }
+  }
+
   private void runForever() {
     try {
-      submission = executorService.submit(new AnnounceThread(model));
+      thread = new AnnounceThread(model);
+      thread.setDaemon(true);
+      thread.setUncaughtExceptionHandler((t, e) -> {
+        System.out.println(t.getName() + " - " + e);
+      });
+      submission = executorService.submit(thread);
     } catch (UnknownHostException | SocketException ignored) {
     }
   }

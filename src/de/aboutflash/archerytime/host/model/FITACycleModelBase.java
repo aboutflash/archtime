@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.google.common.base.Preconditions.checkState;
 import static de.aboutflash.archerytime.model.ScreenState.Screen.MESSAGE;
 
 /**
@@ -38,6 +39,8 @@ public abstract class FITACycleModelBase implements FITACycleModel {
   private volatile ScreenState.Sequence sequence = null;
   private boolean isRepeating = false;
 
+  private boolean isDisposed = false;
+
 
   public FITACycleModelBase() {
     announce = new AudioAnnounce(settingsModel.getSoundFileLocation().toString());
@@ -62,6 +65,7 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
   @Override
   public void startNextStep() {
+    checkState(!isDisposed);
     runSegment(getNextSegment());
   }
 
@@ -132,7 +136,7 @@ public abstract class FITACycleModelBase implements FITACycleModel {
     if (segmentIterator != null) {
       if (segmentIterator.hasNext()) {
         segment = segmentIterator.next();
-      } else if (isRepeating){
+      } else if (isRepeating) {
         // fetch new iterator to start over
         segmentIterator = segments.iterator();
         segment = segmentIterator.next();
@@ -150,11 +154,13 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
   @Override
   public synchronized void setRemainingTimeMillis(double value) {
+    checkState(!isDisposed);
     remainingTimeMillis = value;
   }
 
   @Override
   public synchronized void decreaseRemainingTime(double milliseconds) {
+    checkState(!isDisposed);
     remainingTimeMillis -= milliseconds;
   }
 
@@ -170,6 +176,7 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
   @Override
   public void setRepeating(boolean value) {
+    checkState(!isDisposed);
     isRepeating = value;
   }
 
@@ -184,5 +191,14 @@ public abstract class FITACycleModelBase implements FITACycleModel {
       screenState = new ScreenState(screen, sequence, getRemainingTimeSeconds());
 
     return screenState;
+  }
+
+  @Override
+  public void dispose() {
+    isDisposed = true;
+
+    stopTask();
+    cycleTimer = null;
+    cycleTask = null;
   }
 }

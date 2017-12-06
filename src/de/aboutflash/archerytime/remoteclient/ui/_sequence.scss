@@ -1,7 +1,7 @@
 .sequence-display {
   -fx-min-width: 25em;
 
-  &__ab, &__cd {
+  &__ab, &__cd, &__n {
     SVGPath {
       -fx-fill: $color-bg-target-inactive;
     }
@@ -14,10 +14,14 @@
   }
 
   &__ab {
-    -fx-translate-y: -60px;
+    -fx-translate-y: -5em;
   }
 
   &__cd {
-    -fx-translate-y: 60px;
+    -fx-translate-y: 5em;
+  }
+
+  &__n {
+    -fx-translate-y: 0;
   }
 }

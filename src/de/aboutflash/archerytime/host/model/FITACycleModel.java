@@ -31,4 +31,6 @@ public interface FITACycleModel {
 
   void setRepeating(boolean value);
 
+  void dispose();
+
 }

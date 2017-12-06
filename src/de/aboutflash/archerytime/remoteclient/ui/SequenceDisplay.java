@@ -19,6 +19,7 @@ public class SequenceDisplay extends StackPane {
   private static final String DEFAULT_STYLE_CLASS = "sequence-display";
   private static final String SEQUENCE_AB_STYLE_CLASS = "sequence-display__ab";
   private static final String SEQUENCE_CD_STYLE_CLASS = "sequence-display__cd";
+  private static final String SEQUENCE_N_STYLE_CLASS = "sequence-display__n";
 
   private static final PseudoClass ACTIVE = PseudoClass.getPseudoClass("active");
 
@@ -48,6 +49,9 @@ public class SequenceDisplay extends StackPane {
         case CD:
           showSequenceCD();
           break;
+        case N:
+          showSequenceN();
+          break;
       }
     });
   }
@@ -72,6 +76,11 @@ public class SequenceDisplay extends StackPane {
     secondSequenceIndicator.pseudoClassStateChanged(ACTIVE, true);
   }
 
+  private void showSequenceN() {
+    showSequence(getSequenceN());
+    firstSequenceIndicator.pseudoClassStateChanged(ACTIVE, true);
+  }
+
   private void showSequence(Node first, Node second) {
     getChildren().clear();
     firstSequenceIndicator = first;
@@ -80,6 +89,12 @@ public class SequenceDisplay extends StackPane {
     secondSequenceIndicator = second;
     secondSequenceIndicator.getStyleClass().add(SEQUENCE_CD_STYLE_CLASS);
     getChildren().addAll(firstSequenceIndicator, secondSequenceIndicator);
+  }
+
+  private void showSequence(Node first) {
+    getChildren().clear();
+    firstSequenceIndicator = first;
+    firstSequenceIndicator.getStyleClass().add(SEQUENCE_N_STYLE_CLASS);
   }
 
   private Node getSequenceA() {
@@ -106,6 +121,10 @@ public class SequenceDisplay extends StackPane {
     return createCombinedShape("M50,0a50,50,0,1,0,50,50A50,50,0,0,0,50,0ZM44.3,65.77a8.89,8.89,0,0,0,7,2.72,8.69,8.69,0,0,0,5.91-2.1,11,11,0,0,0,3.3-6h11a27.41,27.41,0,0,1-3.83,10.15,18.48,18.48,0,0,1-6.9,6.39,20,20,0,0,1-9.52,2.2A22.91,22.91,0,0,1,40.2,76.67a16.56,16.56,0,0,1-7-7.17,24.81,24.81,0,0,1-2.41-11.43V42.56a24.81,24.81,0,0,1,2.41-11.41,16.6,16.6,0,0,1,7-7.21,22.8,22.8,0,0,1,11.06-2.49,19.52,19.52,0,0,1,9.54,2.3,18.9,18.9,0,0,1,6.92,6.66A28.77,28.77,0,0,1,71.51,41h-11a14.83,14.83,0,0,0-1.94-4.8,9.19,9.19,0,0,0-3.13-3,8.22,8.22,0,0,0-4.14-1,8.86,8.86,0,0,0-7,2.74q-2.44,2.74-2.45,7.72V58.07C41.85,61.39,42.67,64,44.3,65.77Z",
                                "M180.67,34.82q-2.94-2.52-8.26-2.52h-8.28v36h8.28q5.33,0,8.26-2.52a8.93,8.93,0,0,0,2.94-7.16V42A8.93,8.93,0,0,0,180.67,34.82Z",
                                "M170,0a50,50,0,1,0,50,50A50,50,0,0,0,170,0Zm24.45,58.3q0,9.65-5.83,15t-16.48,5.3H153.48V22h18.7q10.65,0,16.46,5.3t5.81,15Z");
+  }
+
+  private Node getSequenceN() {
+    return createCombinedShape("M50,0a50,50,0,1,0,50,50A50,50,0,0,0,50,0ZM72,78.52H58.93l-20-40.75V78.52H28.73V22h13l20.1,41.38V22H72Z");
   }
 
   private Node createCombinedShape(String... pathDescriptors) {
