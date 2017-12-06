@@ -2,6 +2,7 @@ package de.aboutflash.archerytime.host.main;
 
 import de.aboutflash.archerytime.host.model.ControlViewModel;
 import de.aboutflash.archerytime.host.model.FITACycleBlank;
+import de.aboutflash.archerytime.host.model.FITACycleEndlessDemo;
 import de.aboutflash.archerytime.host.model.FITACycleModel;
 import de.aboutflash.archerytime.host.net.Announcer;
 import de.aboutflash.archerytime.host.ui.ControlScreen;
@@ -40,6 +41,7 @@ public class ArcheryTimeControlHost extends Application {
   @Override
   public void init() throws Exception {
     model = new FITACycleBlank();
+    model.startNextStep();
     announceServer();
     observeModel();
   }
@@ -107,7 +109,7 @@ public class ArcheryTimeControlHost extends Application {
 
 
   private void layout() {
-    setUserAgentStylesheet(getClass().getResource("host.css").toExternalForm());
+//    setUserAgentStylesheet(getClass().getResource("host.css").toExternalForm());
 
     primaryStage.setWidth(DEFAULT_SIZE.getWidth());
     primaryStage.setHeight(DEFAULT_SIZE.getHeight());
@@ -120,7 +122,22 @@ public class ArcheryTimeControlHost extends Application {
 
   private void showControlScreen() {
     controlViewModel = new ControlViewModel();
-    rootPane.getChildren().setAll(new ControlScreen(controlViewModel));
+    final ControlScreen controlScreen = new ControlScreen(controlViewModel);
+    rootPane.getChildren().setAll(controlScreen);
+
+    controlScreen.setOnStart(event -> {
+      announcer.stop();
+      model = new FITACycleEndlessDemo();
+      model.startNextStep();
+      announceServer();
+    });
+
+    controlScreen.setOnStop(event -> {
+      announcer.stop();
+      model = new FITACycleBlank();
+      model.startNextStep();
+      announceServer();
+    });
   }
 
   // for debugging

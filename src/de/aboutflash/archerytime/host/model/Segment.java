@@ -96,25 +96,25 @@ public class Segment {
       this.screen = screen;
       switch (screen) {
         case STOP:
-          duration = INDEFINITE;
+          duration = durationOrDefault(INDEFINITE);
           offset = NONE;
           startWhistleCount = 3;
           break;
 
         case SHOOT:
-          duration = settings.getTotalShootingTimeMillis();
+          duration = durationOrDefault(settings.getTotalShootingTimeMillis());
           offset = settings.getShootingUp30WarningTimeMillis();
           startWhistleCount = 2;
           break;
 
         case SHOOT_UP30:
-          duration = settings.getShootingUp30WarningTimeMillis();
+          duration = durationOrDefault(settings.getShootingUp30WarningTimeMillis());
           offset = NONE;
           startWhistleCount = 0;
           break;
 
         case STEADY:
-          duration = settings.getSteadyTimeMillis();
+          duration = durationOrDefault(settings.getSteadyTimeMillis());
           offset = NONE;
           startWhistleCount = 1;
           break;
@@ -122,7 +122,7 @@ public class Segment {
         case MESSAGE:
         case INVALID:
         default:
-          duration = INDEFINITE;
+          duration = durationOrDefault(INDEFINITE);
           offset = NONE;
           startWhistleCount = 0;
           break;
@@ -148,6 +148,10 @@ public class Segment {
     public SegmentBuilder duration(int value) {
       this.duration = (double) value * 1_000.0;
       return this;
+    }
+
+    private double durationOrDefault(double defaultValue) {
+      return duration > INDEFINITE ? duration : defaultValue;
     }
   }
 }

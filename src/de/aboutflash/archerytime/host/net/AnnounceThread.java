@@ -62,7 +62,7 @@ public class AnnounceThread extends TransmissionThread {
           log.severe(e.getMessage());
         }
 
-      } while (true);
+      } while (!Thread.interrupted());
 
     } catch (SocketException e) {
       log.severe(e.getMessage());

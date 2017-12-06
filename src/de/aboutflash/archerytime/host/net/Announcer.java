@@ -5,6 +5,7 @@ import de.aboutflash.archerytime.host.model.FITACycleModel;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
@@ -17,6 +18,7 @@ public class Announcer {
 
   private final ExecutorService executorService;
   private final FITACycleModel model;
+  private Future<?> submission;
 
   public Announcer(final FITACycleModel model) {
     this.model = model;
@@ -26,12 +28,14 @@ public class Announcer {
   }
 
   public void stop() {
+    submission.cancel(true);
     executorService.shutdownNow();
   }
 
   private void runForever() {
     try {
-      executorService.submit(new AnnounceThread(model));
-    } catch (UnknownHostException | SocketException ignored) { }
+      submission = executorService.submit(new AnnounceThread(model));
+    } catch (UnknownHostException | SocketException ignored) {
+    }
   }
 }
