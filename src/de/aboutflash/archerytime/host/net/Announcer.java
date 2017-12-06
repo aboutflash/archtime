@@ -18,6 +18,7 @@ public class Announcer {
 
   private final ExecutorService executorService;
   private final FITACycleModel model;
+  private AnnounceThread thread;
   private Future<?> submission;
 
   public Announcer(final FITACycleModel model) {
@@ -28,13 +29,21 @@ public class Announcer {
   }
 
   public void stop() {
-    submission.cancel(true);
+//    submission.cancel(true);
     executorService.shutdownNow();
+    thread.interrupt();
+    thread.stop();
   }
 
   private void runForever() {
     try {
-      submission = executorService.submit(new AnnounceThread(model));
+      thread = new AnnounceThread(model);
+      thread.setDaemon(true);
+      thread.setUncaughtExceptionHandler((t, e) -> {
+        System.out.println(t.getName() + " - " + e);
+      });
+//      submission = executorService.submit(thread);
+      executorService.execute(thread);
     } catch (UnknownHostException | SocketException ignored) {
     }
   }

@@ -1,9 +1,6 @@
 package de.aboutflash.archerytime.host.main;
 
-import de.aboutflash.archerytime.host.model.ControlViewModel;
-import de.aboutflash.archerytime.host.model.FITACycleBlank;
-import de.aboutflash.archerytime.host.model.FITACycleEndlessDemo;
-import de.aboutflash.archerytime.host.model.FITACycleModel;
+import de.aboutflash.archerytime.host.model.*;
 import de.aboutflash.archerytime.host.net.Announcer;
 import de.aboutflash.archerytime.host.ui.ControlScreen;
 import javafx.application.Application;
@@ -15,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +29,8 @@ public class ArcheryTimeControlHost extends Application {
   private StackPane rootPane;
   private ControlViewModel controlViewModel;
 
-  private Announcer announcer;
+  //  private Announcer announcer;
+  private LinkedList<Announcer> announcers = new LinkedList<>();
   private FITACycleModel model;
 
   public static void main(final String... args) {
@@ -40,14 +39,15 @@ public class ArcheryTimeControlHost extends Application {
 
   @Override
   public void init() throws Exception {
-    model = new FITACycleBlank();
+    model = new FITACycleHelloWorld();
     model.startNextStep();
-    announceServer();
+    announceStatus();
     observeModel();
   }
 
-  private void announceServer() {
-    announcer = new Announcer(model);
+  private void announceStatus() {
+    announcers.forEach(Announcer::stop);
+    announcers.add(new Announcer(model));
   }
 
   @Override
@@ -55,7 +55,7 @@ public class ArcheryTimeControlHost extends Application {
     primaryStage = stage;
 
     primaryStage.setOnCloseRequest(e -> {
-      announcer.stop();
+      announcers.forEach(Announcer::stop);
       Platform.exit();
       System.exit(0);
     });
@@ -126,17 +126,15 @@ public class ArcheryTimeControlHost extends Application {
     rootPane.getChildren().setAll(controlScreen);
 
     controlScreen.setOnStart(event -> {
-      announcer.stop();
       model = new FITACycleEndlessDemo();
       model.startNextStep();
-      announceServer();
+      announceStatus();
     });
 
     controlScreen.setOnStop(event -> {
-      announcer.stop();
       model = new FITACycleBlank();
       model.startNextStep();
-      announceServer();
+      announceStatus();
     });
   }
 
