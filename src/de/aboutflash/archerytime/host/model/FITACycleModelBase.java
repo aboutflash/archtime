@@ -1,6 +1,5 @@
 package de.aboutflash.archerytime.host.model;
 
-import de.aboutflash.archerytime.host.model.Cycle.Segment;
 import de.aboutflash.archerytime.model.ScreenState;
 import de.aboutflash.archerytime.model.SettingsModel;
 
@@ -30,6 +29,15 @@ public abstract class FITACycleModelBase implements FITACycleModel {
   private final LinkedList<Segment> segments = new LinkedList<>();
   private Iterator<Segment> segmentIterator;
   private Segment currentSegment;
+
+
+  private volatile double endTimeMillis = 0.0;
+  private volatile String message = "";
+  private volatile double remainingTimeMillis = settingsModel.getTotalShootingTimeMillis();
+  private volatile ScreenState.Screen screen = null;
+  private volatile ScreenState.Sequence sequence = null;
+  private boolean isRepeating = false;
+
 
   public FITACycleModelBase() {
     announce = new AudioAnnounce(settingsModel.getSoundFileLocation().toString());
@@ -66,6 +74,8 @@ public abstract class FITACycleModelBase implements FITACycleModel {
   private void runSegment(Segment segment) {
     stopTask();
 
+    currentSegment = segment;
+
     if (segment == null)
       return;
 
@@ -77,15 +87,21 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
     announce.nTimes(segment.getStartWhistleCount());
 
+    // stop on screens with no/infinite duration
     if (remainingTimeMillis <= endTimeMillis) {
       return;
     }
 
     cycleTimer = new Timer();
+
+
+    final long UPDATE_RATE = 100L;
+    final double DECREASE_AMOUNT = (double) UPDATE_RATE;
+
     cycleTask = new TimerTask() {
       @Override
       public void run() {
-        decreaseRemainingTime(100);
+        decreaseRemainingTime(DECREASE_AMOUNT);
 
         System.out.print('.');
 
@@ -97,7 +113,7 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
     // special case of sequence UP30. We want to continue counting immediately w/o delay
     final long delay = screen == ScreenState.Screen.SHOOT_UP30 ? 0L : 1_000L;
-    cycleTimer.scheduleAtFixedRate(cycleTask, delay, 100);
+    cycleTimer.scheduleAtFixedRate(cycleTask, delay, UPDATE_RATE);
   }
 
   private void stopTask() {
@@ -112,17 +128,20 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
   @Nullable
   private Segment getNextSegment() {
-    currentSegment = segmentIterator != null && segmentIterator.hasNext()
-        ? segmentIterator.next() : null;
+    Segment segment = null;
+    if (segmentIterator != null) {
+      if (segmentIterator.hasNext()) {
+        segment = segmentIterator.next();
+      } else if (isRepeating){
+        // fetch new iterator to start over
+        segmentIterator = segments.iterator();
+        segment = segmentIterator.next();
+      }
+    }
 
-    return currentSegment;
+    return segment;
   }
 
-  private volatile double endTimeMillis = 0.0;
-
-  private volatile String message = "";
-
-  private volatile double remainingTimeMillis = settingsModel.getTotalShootingTimeMillis();
 
   @Override
   public synchronized double getRemainingTimeMillis() {
@@ -144,10 +163,15 @@ public abstract class FITACycleModelBase implements FITACycleModel {
     return (int) Math.floor(getRemainingTimeMillis() * MILLIS_TO_SECONDS);
   }
 
-  private volatile ScreenState.Screen screen = null;
+  @Override
+  public boolean isRepeating() {
+    return isRepeating;
+  }
 
-  private volatile ScreenState.Sequence sequence = null;
-
+  @Override
+  public void setRepeating(boolean value) {
+    isRepeating = value;
+  }
 
   @Override
   public synchronized ScreenState getScreenState() {
@@ -161,5 +185,4 @@ public abstract class FITACycleModelBase implements FITACycleModel {
 
     return screenState;
   }
-
 }

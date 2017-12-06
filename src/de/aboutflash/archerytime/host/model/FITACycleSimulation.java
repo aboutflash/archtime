@@ -128,5 +128,15 @@ public class FITACycleSimulation implements FITACycleModel {
     return screenState;
   }
 
+  @Override
+  public boolean isRepeating() {
+    return true;
+  }
+
+  @Override
+  public void setRepeating(boolean value) {
+
+  }
+
 
 }

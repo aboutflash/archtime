@@ -27,4 +27,8 @@ public interface FITACycleModel {
 
   ScreenState getScreenState();
 
+  boolean isRepeating();
+
+  void setRepeating(boolean value);
+
 }

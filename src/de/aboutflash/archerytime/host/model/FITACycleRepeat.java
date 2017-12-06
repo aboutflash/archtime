@@ -1,6 +1,6 @@
 package de.aboutflash.archerytime.host.model;
 
-import de.aboutflash.archerytime.host.model.Cycle.Segment.SegmentBuilder;
+import de.aboutflash.archerytime.host.model.Segment.SegmentBuilder;
 
 import static de.aboutflash.archerytime.model.ScreenState.Screen.*;
 import static de.aboutflash.archerytime.model.ScreenState.Sequence.N;
