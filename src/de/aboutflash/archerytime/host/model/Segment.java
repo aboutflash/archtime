@@ -22,7 +22,8 @@ public class Segment {
 
   public Segment(final ScreenState.Sequence sequence, final ScreenState.Screen screen,
                  final double durationMillis, final double offsetMillis,
-                 final int startWhistleCount, final String message) {
+                 final int startWhistleCount, final String message)
+  {
 
     checkArgument(offsetMillis >= 0, "Negative time offset is not allowed");
 
@@ -36,13 +37,15 @@ public class Segment {
 
   public Segment(final ScreenState.Sequence sequence, final ScreenState.Screen screen,
                  final double durationMillis, final double offsetMillis,
-                 final int startWhistleCount) {
+                 final int startWhistleCount)
+  {
 
     this(sequence, screen, durationMillis, offsetMillis, startWhistleCount, "");
   }
 
   public Segment(final ScreenState.Sequence sequence, final ScreenState.Screen screen,
-                 final double durationMillis, final int startWhistleCount) {
+                 final double durationMillis, final int startWhistleCount)
+  {
     this(sequence, screen, durationMillis, 0, startWhistleCount);
   }
 

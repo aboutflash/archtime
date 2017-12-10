@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 public class AudioAnnounce {
   private final static Logger log = Logger.getLogger("AudioAnnounce");
 
-  private String mediaLocation;
+  private final String mediaLocation;
   private MediaPlayer mediaPlayer;
   private boolean canPlayMedia = false;
 
-  public AudioAnnounce(String mediaLocation) {
+  public AudioAnnounce(final String mediaLocation) {
     this.mediaLocation = mediaLocation;
     try {
       mediaPlayer = new MediaPlayer(new Media(mediaLocation));
@@ -29,7 +29,7 @@ public class AudioAnnounce {
     }
   }
 
-  public void nTimes(int repeat) {
+  public void playTimes(final int repeat) {
     if (!canPlayMedia) {
       log.severe("Cannot play media");
       return;

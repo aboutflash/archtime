@@ -19,7 +19,8 @@ public abstract class BasicSerializer<T> extends StdSerializer<T> {
    */
   protected void writeDateTime(
       JsonGenerator generator, String name)
-      throws IOException {
+      throws IOException
+  {
     checkNotNull(generator, "No generator given");
     checkNotNull(name, "No name given");
   }

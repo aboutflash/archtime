@@ -89,7 +89,7 @@ public abstract class FITACycleModelBase implements FITACycleModel {
     screen = segment.getScreen();
     sequence = segment.getSequence();
 
-    announce.nTimes(segment.getStartWhistleCount());
+    announce.playTimes(segment.getStartWhistleCount());
 
     // stop on screens with no/infinite duration
     if (remainingTimeMillis <= endTimeMillis) {
@@ -106,8 +106,6 @@ public abstract class FITACycleModelBase implements FITACycleModel {
       @Override
       public void run() {
         decreaseRemainingTime(DECREASE_AMOUNT);
-
-        System.out.print('.');
 
         if (remainingTimeMillis <= endTimeMillis) {
           startNextStep();

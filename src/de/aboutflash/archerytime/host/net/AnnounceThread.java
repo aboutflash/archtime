@@ -1,8 +1,8 @@
 package de.aboutflash.archerytime.host.net;
 
+import de.aboutflash.archerytime.host.model.FITACycleModel;
 import de.aboutflash.archerytime.json.JSONObjectSerializer;
 import de.aboutflash.archerytime.net.TransmissionThread;
-import de.aboutflash.archerytime.host.model.FITACycleModel;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -54,7 +54,7 @@ public class AnnounceThread extends TransmissionThread {
       do {
         try {
           byte[] sendData = getSerializedData().getBytes();
-          DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, getSubnetAddress(), RESPONSE_PORT);
+          DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, getSubnetSendAddress(), RESPONSE_PORT);
 
           //Send host announcement
           socket.send(sendPacket);

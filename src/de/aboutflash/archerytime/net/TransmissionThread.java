@@ -20,25 +20,26 @@ abstract public class TransmissionThread extends Thread {
   protected final static int RESPONSE_PORT = 10101;
   protected final static String DISCOVERY_IDENTIFIER = "BROADCAST_ARCHERY_TIME_CONTROL_SERVER_V0.0.1";
 
-  private final InetAddress subnetAddress;
-  private final InetAddress localAddress;
+  private final InetAddress subnetSendAddress;
+  private final InetAddress receiveAddress;
 
 
   protected TransmissionThread() throws UnknownHostException, SocketException {
     setDaemon(true);
 
-    localAddress = InetSubnetDetector.getLocalAddress();
-    LOG.info(localAddress.getHostAddress());
+    subnetSendAddress = InetSubnetDetector.getSubnetBroadcastSendAddress();
+    LOG.info(subnetSendAddress.getHostAddress());
 
-    subnetAddress = InetSubnetDetector.getSubnetBroadcastAddress();
-    LOG.info(subnetAddress.getHostAddress());
+    receiveAddress = InetSubnetDetector.getSubnetBroadcastReceiveAddress();
+    LOG.info(receiveAddress.getHostAddress());
   }
 
-  public InetAddress getSubnetAddress() {
-    return subnetAddress;
+  public InetAddress getSubnetSendAddress() {
+    return subnetSendAddress;
   }
 
-  public InetAddress getLocalAddress() {
-    return localAddress;
+  public InetAddress getReceiveAddress() {
+    return receiveAddress;
   }
+
 }

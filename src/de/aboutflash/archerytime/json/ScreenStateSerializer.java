@@ -26,7 +26,8 @@ public class ScreenStateSerializer extends StdSerializer<ScreenState> {
 
   @Override
   public void serialize(final ScreenState value, final JsonGenerator gen, final SerializerProvider provider)
-      throws IOException {
+      throws IOException
+  {
     checkNotNull(value, "No value given");
 
     gen.writeStartObject();

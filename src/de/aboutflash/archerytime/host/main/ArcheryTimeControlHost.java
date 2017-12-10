@@ -104,7 +104,8 @@ public class ArcheryTimeControlHost extends Application {
 
     {
       if (event.getCode() == KeyCode.C
-          && event.isControlDown()) {
+          && event.isControlDown())
+      {
         Platform.exit();
         System.exit(0);
       }
@@ -115,7 +116,8 @@ public class ArcheryTimeControlHost extends Application {
 
     {
       if (event.getCode() == KeyCode.SPACE
-          && event.isControlDown()) {
+          && event.isControlDown())
+      {
         model.startNextStep();
       }
     });

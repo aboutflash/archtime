@@ -43,7 +43,7 @@ public class ListenerThread extends TransmissionThread {
   private void detectServer() {
 
     byte[] buffer = new byte[RECEIVE_BUFFER_SIZE_BYTES];
-    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, getLocalAddress(), RESPONSE_PORT);
+    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, getReceiveAddress(), RESPONSE_PORT);
 
     try (DatagramSocket socket = new DatagramSocket(packet.getPort(), packet.getAddress())) {
       socket.setBroadcast(true);

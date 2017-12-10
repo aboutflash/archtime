@@ -158,7 +158,8 @@ public class ArcheryTimeDisplay extends Application {
     // exit Ctrl-C
     primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
       if (event.getCode() == KeyCode.C
-          && event.isControlDown()) {
+          && event.isControlDown())
+      {
         Platform.exit();
         System.exit(0);
       }
@@ -235,7 +236,8 @@ public class ArcheryTimeDisplay extends Application {
     final double ratio = initWidth / initHeight;
     log.info("ratio " + ratio);
 
-    SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, ratio, initHeight, initWidth, contentPane);
+    SceneSizeChangeListener sizeListener = new SceneSizeChangeListener(scene, ratio, initHeight, initWidth,
+        contentPane);
     scene.widthProperty().addListener(sizeListener);
     scene.heightProperty().addListener(sizeListener);
   }

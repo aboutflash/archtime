@@ -17,29 +17,40 @@ public final class InetSubnetDetector {
 
   @SuppressWarnings("ImplicitNumericConversion")
   private static final byte[] UNUSED_ADDRESS = new byte[]{1, 1, 1, 1};
+  @SuppressWarnings("ImplicitNumericConversion")
+  private static final byte[] BROADCAST_ADDRESS = new byte[]{0, 0, 0, 0};
   private static final int FULL_SEGMENT = 0xff;
 
   private InetSubnetDetector() {}
 
   /**
-   * Gets the broadcast address of the local subnet.
+   * Gets the local IPv4 address.
    */
   public static InetAddress getLocalAddress() throws UnknownHostException, SocketException {
     return InetAddress.getByAddress(discoverBroadcastAddress().getAddress());
   }
 
   /**
-   * Gets the broadcast address of the local subnet.
+   * Gets the IPv4 broadcast address of the local subnet.
+   * This address will be used as target address for a sending host.
    */
-  public static InetAddress getSubnetBroadcastAddress() throws UnknownHostException, SocketException {
-    return InetAddress.getByAddress(getBroadcastAddress());
+  public static InetAddress getSubnetBroadcastSendAddress() throws UnknownHostException, SocketException {
+    return InetAddress.getByAddress(getLocalSubnetBroadcast());
+  }
+
+  /**
+   * Gets the IPv4 broadcast address to bind to to listen for packages on all devices.
+   * This address is used by a listening client.
+   */
+  public static InetAddress getSubnetBroadcastReceiveAddress() throws UnknownHostException, SocketException {
+    return InetAddress.getByAddress(BROADCAST_ADDRESS);
   }
 
   /**
    * Takes the discovered local address and uses this to determine the broadcast address
    * in the form of xxx.xxx.xxx.255.
    */
-  private static byte[] getBroadcastAddress() throws SocketException, UnknownHostException {
+  private static byte[] getLocalSubnetBroadcast() throws SocketException, UnknownHostException {
     final byte[] address = discoverBroadcastAddress().getAddress();
 
     // replace last IP segment by .255
@@ -50,13 +61,13 @@ public final class InetSubnetDetector {
   }
 
   /**
-   * Sends an UDP packet to Nirvana and retrieves from the created DatagramSocket the local
-   * IPv4 address that was used. This is probably the machines IP address which can be accepted
-   * as the "default" network interface address.
+   * Send an UDP packet to Nirvana and retrieve the local IPv4 address that was used from the created DatagramSocket.
+   * This is probably the machines IP address which can be accepted as the "default" network interface address.
    */
   private static InetAddress discoverBroadcastAddress() throws SocketException, UnknownHostException {
     try (DatagramSocket s = new DatagramSocket()) {
       s.connect(InetAddress.getByAddress(UNUSED_ADDRESS), 0);
+      System.out.printf("**************** FOUND SOCKET ADDRESS:PORT %1s%n", s.getLocalSocketAddress());
       return s.getLocalAddress();
     }
   }

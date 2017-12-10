@@ -17,7 +17,9 @@ public class FITACycleBlank extends FITACycleModelBase {
 
   @Override
   protected void createSegments() {
-    getSegments().add(new SegmentBuilder().sequence(NONE).screen(MESSAGE).message("Well, I'll do my very best.").build());
+    getSegments().add(
+        new SegmentBuilder().sequence(NONE).screen(MESSAGE).message("Well, I'll do my very best.").build()
+    );
   }
 
   @Override

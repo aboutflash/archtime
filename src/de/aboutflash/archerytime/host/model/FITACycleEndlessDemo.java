@@ -27,10 +27,12 @@ public class FITACycleEndlessDemo extends FITACycleModelBase {
     getSegments().add(new SegmentBuilder().sequence(CD).screen(STEADY).build()); // swap -> CD
     getSegments().add(new SegmentBuilder().sequence(CD).screen(SHOOT).build());
     getSegments().add(new SegmentBuilder().sequence(CD).screen(SHOOT_UP30).build());
-    getSegments().add(new SegmentBuilder().sequence(CD).screen(STOP).duration(5).build()); // pause - pick up arrows
+    getSegments().add(new SegmentBuilder().sequence(CD).screen(STOP).duration(5).build());
+    // pause - pick up arrows
 
     getSegments().add(new SegmentBuilder().screen(MESSAGE).message("Punkte zählen / Pfeile holen").duration(3).build());
-    getSegments().add(new SegmentBuilder().sequence(CD).screen(STOP).whistle(0).duration(5).build()); // pause - pick up arrows
+    getSegments().add(new SegmentBuilder().sequence(CD).screen(STOP).whistle(0).duration(5).build());
+    // pause - pick up arrows
 
     getSegments().add(new SegmentBuilder().sequence(CD).screen(STEADY).build());
     getSegments().add(new SegmentBuilder().sequence(CD).screen(SHOOT).build());
@@ -52,10 +54,12 @@ public class FITACycleEndlessDemo extends FITACycleModelBase {
     getSegments().add(new SegmentBuilder().sequence(B).screen(STEADY).build()); // swap -> CD
     getSegments().add(new SegmentBuilder().sequence(B).screen(SHOOT).build());
     getSegments().add(new SegmentBuilder().sequence(B).screen(SHOOT_UP30).build());
-    getSegments().add(new SegmentBuilder().sequence(B).screen(STOP).duration(5).build()); // pause - pick up arrows
+    getSegments().add(new SegmentBuilder().sequence(B).screen(STOP).duration(5).build());
+    // pause - pick up arrows
 
     getSegments().add(new SegmentBuilder().screen(MESSAGE).message("Punkte zählen / Pfeile holen").duration(3).build());
-    getSegments().add(new SegmentBuilder().sequence(B).screen(STOP).whistle(0).duration(5).build()); // pause - pick up arrows
+    getSegments().add(new SegmentBuilder().sequence(B).screen(STOP).whistle(0).duration(5).build());
+    // pause - pick up arrows
 
     getSegments().add(new SegmentBuilder().sequence(B).screen(STEADY).build());
     getSegments().add(new SegmentBuilder().sequence(B).screen(SHOOT).build());
