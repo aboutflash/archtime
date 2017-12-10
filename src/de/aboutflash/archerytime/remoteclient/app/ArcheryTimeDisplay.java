@@ -28,6 +28,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+//    _                _   _                 _ _         _
+//   | |__  _____ __ _| |_(_)_ __  ___    __| (_)____ __| |__ _ _  _
+//   | '_ \/ _ \ V  V /  _| | '  \/ -_)  / _` | (_-< '_ \ / _` | || |
+//   |_.__/\___/\_/\_/ \__|_|_|_|_\___|  \__,_|_/__/ .__/_\__,_|\_, |
+//                                                 |_|          |__/
+
 /**
  * The dumb display application.
  * It simply shows, what the control host says.

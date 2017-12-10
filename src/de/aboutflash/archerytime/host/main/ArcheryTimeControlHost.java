@@ -21,8 +21,14 @@ import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+//    _                _   _             _           _
+//   | |__  _____ __ _| |_(_)_ __  ___  | |_  ___ __| |_
+//   | '_ \/ _ \ V  V /  _| | '  \/ -_) | ' \/ _ (_-<  _|
+//   |_.__/\___/\_/\_/ \__|_|_|_|_\___| |_||_\___/__/\__|
+//
+
 /**
- * Class
+ * Host application to control shooting cycles.
  *
  * @author falk@aboutflash.de on 19.11.2017.
  */
